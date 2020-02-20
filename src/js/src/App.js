@@ -1,14 +1,17 @@
 import React, {Component} from 'react';
-import {Avatar, Table} from 'antd';
+import {Avatar, Icon, Spin, Table} from 'antd';
 
 import './App.css';
 import {getAllStudents} from './client';
 import Container from "./Container";
 
+const getIndicatorIcon = () => <Icon type="loading" style={{fontSize: 24}}/>;
+
 class App extends Component {
 
     state = {
-        students: []
+        students: [],
+        isFetching: false
     };
 
     componentDidMount() {
@@ -16,16 +19,31 @@ class App extends Component {
     }
 
     fetchStudents = () => {
+        this.setState({
+            isFetching: true
+        });
         getAllStudents().then(res => {
             res.json().then(students => {
-                this.setState({students});
+                this.setState({
+                    students,
+                    isFetching: false
+                });
             });
+
         });
     };
 
     render() {
 
-        const {students} = this.state;
+        const {students, isFetching} = this.state;
+
+        if (isFetching) {
+            return (
+                <Container>
+                    <Spin indicator={getIndicatorIcon()}/>
+                </Container>
+            );
+        }
 
         if (students && students.length) {
             const columns = [
