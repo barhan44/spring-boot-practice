@@ -3,6 +3,7 @@ import {Table} from 'antd';
 
 import './App.css';
 import {getAllStudents} from './client';
+import Container from "./Container";
 
 class App extends Component {
 
@@ -55,7 +56,16 @@ class App extends Component {
                 },
             ];
 
-            return (<Table dataSource={students} columns={columns} rowKey='studentId'/>);
+            return (
+                <Container>
+                    <Table
+                        dataSource={students}
+                        columns={columns}
+                        rowKey='studentId'
+                        pagination={false}
+                    />
+                </Container>
+            );
         }
         return <h1>No Students found...</h1>
     };
