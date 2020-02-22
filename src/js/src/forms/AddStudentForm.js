@@ -1,8 +1,9 @@
 import React, {Component} from "react";
 import {Formik} from 'formik';
-import {Input, Button} from 'antd';
+import {Input, Button, Tag} from 'antd';
 
 const inputBottomMargin = {marginBottom: '10px'};
+const tagStyle = { backgroundColor: '#f50', color: 'white', ...inputBottomMargin };
 
 class AddStudentForm extends Component {
     render() {
@@ -21,7 +22,7 @@ class AddStudentForm extends Component {
                     }
 
                     if (!values.email) {
-                        errors.email = 'Required';
+                        errors.email = 'Email Required';
                     } else if (
                         !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
                     ) {
@@ -61,7 +62,7 @@ class AddStudentForm extends Component {
                             value={values.firstName}
                             placeholder='First Name'
                         />
-                        {errors.firstName && touched.firstName && errors.firstName}
+                        {errors.firstName && touched.firstName && <Tag style={tagStyle}>{errors.firstName}</Tag>}
                         <Input
                             style={inputBottomMargin}
                             name="lastName"
@@ -70,7 +71,7 @@ class AddStudentForm extends Component {
                             value={values.lastName}
                             placeholder='Last Name'
                         />
-                        {errors.lastName && touched.lastName && errors.lastName}
+                        {errors.lastName && touched.lastName && <Tag style={tagStyle}>{errors.lastName}</Tag>}
                         <Input
                             style={inputBottomMargin}
                             name="email"
@@ -80,7 +81,7 @@ class AddStudentForm extends Component {
                             value={values.email}
                             placeholder='Email'
                         />
-                        {errors.email && touched.email && errors.email}
+                        {errors.email && touched.email && <Tag style={tagStyle}>{errors.email}</Tag>}
                         <Input
                             style={inputBottomMargin}
                             name="gender"
@@ -89,7 +90,7 @@ class AddStudentForm extends Component {
                             value={values.gender}
                             placeholder='Gender'
                         />
-                        {errors.gender && touched.gender && errors.gender}
+                        {errors.gender && touched.gender && <Tag style={tagStyle}>{errors.gender}</Tag>}
                         <Button type="submit" disabled={isSubmitting}>
                             Submit
                         </Button>
