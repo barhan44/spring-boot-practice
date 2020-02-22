@@ -6,6 +6,7 @@ import { getAllStudents } from "./client";
 import Container from "./Container";
 import Footer from "./Footer";
 import AddStudentForm from "./forms/AddStudentForm";
+import { errorNotification } from "./Notification";
 
 const getIndicatorIcon = () => <Icon type="loading" style={{ fontSize: 24 }} />;
 
@@ -29,14 +30,23 @@ class App extends Component {
     this.setState({
       isFetching: true
     });
-    getAllStudents().then(res => {
-      res.json().then(students => {
+    getAllStudents()
+      .then(res => {
+        res.json().then(students => {
+          this.setState({
+            students,
+            isFetching: false
+          });
+        });
+      })
+      .catch(error => {
+        const message = error.error.message;
+        const description = error.error.error;
+        errorNotification(message, description);
         this.setState({
-          students,
           isFetching: false
         });
       });
-    });
   };
 
   render() {
