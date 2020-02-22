@@ -1,26 +1,52 @@
 package com.barhan.practice.springboot.student;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Repository
 public class StudentDataAccessService {
 
-    List<Student> selectAllStudents() {
-        List<Student> students = new ArrayList<Student>();
-        students.add(this.generateRandomStudent());
-        students.add(this.generateRandomStudent());
+    private final JdbcTemplate jdbcTemplate;
 
-        return students;
+    @Autowired
+    public StudentDataAccessService(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
     }
 
-    private Student generateRandomStudent() {
-        String firstName = "Test" + (int) (Math.random() * 100);
-        String lastName = "Name" + (int) (Math.random() * 100);
-        String email = firstName + lastName + "@" + "test.com";
-        return new Student(UUID.randomUUID(), firstName, lastName, email, Student.Gender.MALE);
+    List<Student> selectAllStudents() {
+        String sql = "" +
+                "SELECT student_id, " +
+                " first_name, " +
+                " last_name, " +
+                " email, " +
+                " gender " +
+                "FROM student";
+        return jdbcTemplate.query(sql, mapStudentFromDb());
+    }
+
+    private RowMapper<Student> mapStudentFromDb() {
+        return (resultSet, i) -> {
+            String studentIdStr = resultSet.getString("student_id");
+            UUID studentId = UUID.fromString(studentIdStr);
+
+            String firstName = resultSet.getString("first_name");
+            String lastName = resultSet.getString("last_name");
+            String email = resultSet.getString("email");
+
+            String genderStr = resultSet.getString("gender").toUpperCase();
+            Student.Gender gender = Student.Gender.valueOf(genderStr);
+            return new Student(
+                    studentId,
+                    firstName,
+                    lastName,
+                    email,
+                    gender
+            );
+        };
     }
 }
