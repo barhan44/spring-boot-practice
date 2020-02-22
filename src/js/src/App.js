@@ -5,6 +5,7 @@ import './App.css';
 import {getAllStudents} from './client';
 import Container from "./Container";
 import Footer from "./Footer";
+import AddStudentForm from "./forms/AddStudentForm";
 
 const getIndicatorIcon = () => <Icon type="loading" style={{fontSize: 24}}/>;
 
@@ -100,7 +101,7 @@ class App extends Component {
                     />
                     <Modal title='Add new student' visible={isAddStudentModalVisible} onOk={this.closeAddStudentModal}
                            onCancel={this.closeAddStudentModal} width={1000}>
-                        <h1>Hello Modal with Antd</h1>
+                        <AddStudentForm />
                     </Modal>
                     <Footer numberOfStudents={students.length} handleAddStudentClickEvent={this.openAddStudentModal}/>
                 </Container>
