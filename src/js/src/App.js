@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Avatar, Icon, Spin, Table, Modal } from "antd";
+import { Avatar, Icon, Spin, Table, Modal, Empty } from "antd";
 
 import "./App.css";
 import { getAllStudents } from "./client";
@@ -51,6 +51,29 @@ class App extends Component {
 
   render() {
     const { students, isFetching, isAddStudentModalVisible } = this.state;
+
+    const commonElements = () => (
+        <div>
+          <Modal
+              title="Add new student"
+              visible={isAddStudentModalVisible}
+              onOk={this.closeAddStudentModal}
+              onCancel={this.closeAddStudentModal}
+              width={1000}
+          >
+            <AddStudentForm
+                onSuccess={() => {
+                  this.closeAddStudentModal();
+                  this.fetchStudents();
+                }}
+            />
+          </Modal>
+          <Footer
+              numberOfStudents={students.length}
+              handleAddStudentClickEvent={this.openAddStudentModal}
+          />
+        </div>
+    );
 
     if (isFetching) {
       return (
@@ -108,28 +131,16 @@ class App extends Component {
             rowKey="studentId"
             pagination={false}
           />
-          <Modal
-            title="Add new student"
-            visible={isAddStudentModalVisible}
-            onOk={this.closeAddStudentModal}
-            onCancel={this.closeAddStudentModal}
-            width={1000}
-          >
-            <AddStudentForm
-              onSuccess={() => {
-                this.closeAddStudentModal();
-                this.fetchStudents();
-              }}
-            />
-          </Modal>
-          <Footer
-            numberOfStudents={students.length}
-            handleAddStudentClickEvent={this.openAddStudentModal}
-          />
+          {commonElements()}
         </Container>
       );
     }
-    return <h1>No Students found...</h1>;
+    return (
+      <Container>
+        <Empty description={<h1>No Students found</h1>} />
+        {commonElements()}
+      </Container>
+    );
   }
 }
 
