@@ -30,19 +30,19 @@ public class Student {
         return studentId;
     }
 
-    String getFirstName() {
+    public String getFirstName() {
         return firstName;
     }
 
-    String getLastName() {
+    public String getLastName() {
         return lastName;
     }
 
-    String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    Gender getGender() {
+    public Gender getGender() {
         return gender;
     }
 
