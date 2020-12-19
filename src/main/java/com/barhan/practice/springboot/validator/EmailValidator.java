@@ -1,4 +1,4 @@
-package com.barhan.practice.springboot;
+package com.barhan.practice.springboot.validator;
 
 import org.springframework.stereotype.Component;
 

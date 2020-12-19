@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Avatar, Icon, Spin, Table, Modal, Empty } from "antd";
+import { Avatar, Spin, Table, Modal, Empty } from "antd";
+import LoadingIcon from 'antd/lib/button/LoadingIcon';
 
 import "./App.css";
 import { getAllStudents } from "./client";
@@ -8,7 +9,7 @@ import Footer from "./Footer";
 import AddStudentForm from "./forms/AddStudentForm";
 import { errorNotification } from "./Notification";
 
-const getIndicatorIcon = () => <Icon type="loading" style={{ fontSize: 24 }} />;
+const getIndicatorIcon = () => <LoadingIcon type="loading" style={{ fontSize: 24 }} />;
 
 class App extends Component {
   state = {

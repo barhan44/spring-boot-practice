@@ -1,5 +1,6 @@
 package com.barhan.practice.springboot;
 
+import com.barhan.practice.springboot.validator.EmailValidator;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

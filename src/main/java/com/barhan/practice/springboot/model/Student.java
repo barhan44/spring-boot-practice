@@ -1,66 +1,87 @@
-package com.barhan.practice.springboot.student;
+package com.barhan.practice.springboot.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.UUID;
 
 public class Student {
 
-    private final UUID studentId;
+    private Long id;
 
-    @NotBlank
-    private final String firstName;
+    @NotBlank(message = "First name is mandatory")
+    private String firstName;
 
-    @NotBlank
-    private final String lastName;
+    @NotBlank(message = "Last name is mandatory")
+    private String lastName;
 
-    @NotBlank
-    private final String email;
+    @NotBlank(message = "Email is mandatory")
+    private String email;
 
-    @NotNull
-    private final Gender gender;
+    @NotNull(message = "Gender is mandatory")
+    private Gender gender;
 
-    Student(
-            @JsonProperty("studentId") UUID studentId,
+    public Student() {
+    }
+
+    public Student(
+            @JsonProperty("id") Long id,
             @JsonProperty("firstName") String firstName,
             @JsonProperty("lastName") String lastName,
             @JsonProperty("email") String email,
             @JsonProperty("gender") Gender gender
     ) {
-        this.studentId = studentId;
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.gender = gender;
     }
 
-    public UUID getStudentId() {
-        return studentId;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
     public String getLastName() {
         return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Gender getGender() {
         return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     @Override
     public String toString() {
         return "Student{" +
-                "studentId=" + studentId +
+                "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
@@ -69,6 +90,6 @@ public class Student {
     }
 
     public enum Gender {
-        MALE, FEMALE
+        M, F
     }
 }
